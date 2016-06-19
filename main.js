@@ -1,20 +1,12 @@
 var http = require('http');
 var fs = require('fs');
 var url = require('url');
-
-var link = 'releases.ubuntu.com';
-var link_path = '/16.04/ubuntu-16.04-desktop-amd64.iso';
-
-var options = {
-  hostname : link,
-  path : link_path,
-  method : 'GET'
-};
+var path = require('path');
 
 var express = require('express');
 var app = express();
 
-function DownloadRequest(options,stream) {
+function DownloadRequest(options,userres) {
 
     var req = http.request(options,function(res){
 
@@ -23,11 +15,16 @@ function DownloadRequest(options,stream) {
           if(res.headers.hasOwnProperty('accept-ranges'))
           console.log(res.headers,typeof res.headers,res.statusCode);
 
-          stream.set(res.headers);
-          res.pipe(stream);
+          userres.set(res.headers);
+
+          if(res.headers['content-type']==='application/octet-stream')
+          userres.type(path.extname(options.path));
+
+          res.pipe(userres);
         }
 
         else if(res.statusCode==302) {
+
           console.log('Calling DownloadRequest() with ',options);
           var URL = url.parse(res.headers.location);
 
@@ -37,7 +34,7 @@ function DownloadRequest(options,stream) {
             method : 'GET'
           };
 
-          DownloadRequest(options,stream);
+          DownloadRequest(options,userres);
         }
     });
 
@@ -48,6 +45,20 @@ function DownloadRequest(options,stream) {
 app.set('port', (process.env.PORT || 5000));
 
 app.get('/', function(request, response) {
+
+  if(!request.query.myurl)
+  {
+    response.end();
+    return;
+  }
+
+  var URL = url.parse(request.query.myurl);
+
+  var options = {
+    hostname : URL.hostname,
+    path : URL.pathname,
+    method : 'GET'
+  };
 
   DownloadRequest(options,response);
 

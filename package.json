@@ -1,7 +1,7 @@
 {
   "name": "my-downloader",
   "version": "1.0.0",
-  "description": "",
+  "description": "An example situation is, when you want to download Ubuntu 16.04 for your desktop. But the direct link to the Ubuntu 16.04 ISO file is a HTTP link. Now, you are **not** at home, let's say you are at office or college. Such places **don't allow** big and certain files to be downloaded, to limit unnecessary Internet usage. And this happens only when you use a HTTP link for downloading. And they do it by interfering with your HTTP request using some proxy server and stop it there itself and stop you from doing anything unnecessary, by checking the domain of the link you are accessing. Or even if the request goes to the server, then when response comes, if it is HTTP, the proxy can still stop the response. How can the proxy server know anything about our messages (request/response), well, it knows **everything**, if it is HTTP. [ In my college 50 MB is the cap/limit for downloading ]",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,5 +10,14 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.14.0"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/karuppiah7890/my-downloader.git"
+  },
+  "bugs": {
+    "url": "https://github.com/karuppiah7890/my-downloader/issues"
+  },
+  "homepage": "https://github.com/karuppiah7890/my-downloader#readme"
 }

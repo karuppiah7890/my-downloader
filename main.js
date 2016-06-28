@@ -18,7 +18,13 @@ function DownloadRequest(options,userres) {
           userres.set(res.headers);
 
           if(res.headers['content-type']==='application/octet-stream')
-          userres.type(path.extname(options.path));
+          {
+            if(path.extname(options.path)!='')
+            userres.type(path.extname(options.path));
+
+            else
+            userres.type('application/octet-stream');
+          }
 
           res.pipe(userres);
         }

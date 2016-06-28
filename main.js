@@ -30,7 +30,7 @@ function DownloadRequest(options,userres) {
 
           options = {
             hostname : URL.hostname,
-            path : URL.pathname,
+            path : URL.path,
             method : 'GET'
           };
 
@@ -56,7 +56,7 @@ app.get('/', function(request, response) {
 
   var options = {
     hostname : URL.hostname,
-    path : URL.pathname,
+    path : URL.path,
     method : 'GET'
   };
 
